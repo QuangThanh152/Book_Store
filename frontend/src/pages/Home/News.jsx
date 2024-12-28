@@ -9,7 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Link } from "react-router-dom";
 
 // data news
@@ -53,6 +54,7 @@ const News = () => {
             <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
+                navigation={true}
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -67,7 +69,7 @@ const News = () => {
                         spaceBetween: 50,
                     },
                 }}
-                modules={[Pagination]}
+                modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
 

@@ -7,6 +7,8 @@ import { TbShoppingCartStar } from "react-icons/tb";
 
 import avataImg from "../assets/avatar.png";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
 
 const navigation = [
     {
@@ -29,9 +31,13 @@ const navigation = [
 
 const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const cartItems = useSelector(state => state.cart.cartItems);
+    console.log(cartItems)
     // console.log(isDropdownOpen)
 
-    const currentUser = true;
+    // false là chưa login, true là đã login
+    const currentUser = false;
     return (
         <header className="px-4 py-6 mx-auto max-w-screen-2xl">
             <nav className="flex items-center justify-between">
