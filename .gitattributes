@@ -1,0 +1,10 @@
+.gitattributes text eol=lf
+# Đảm bảo tất cả các file văn bản sử dụng LF
+* text=auto
+
+# Các file cụ thể (JSON, JS, HTML, CSS, v.v.)
+*.js text
+*.json text
+*.html text
+*.css text
+*.md text

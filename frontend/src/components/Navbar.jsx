@@ -106,8 +106,10 @@ const Navbar = () => {
                         to="/cart"
                         className="flex items-center p-1 py-2 rounded-sm bg-primary sm:px-6"
                     >
-                        <TbShoppingCartStar />
-                        <span className="text-sm font-semibold sm:ml-1">0</span>
+                        <TbShoppingCartStar className="" />
+                        {
+                            cartItems.length > 0 ? <span className="text-sm font-semibold sm:ml-1">{cartItems.length}</span> : <span className="text-sm font-semibold sm:ml-1">0</span>
+                        }
                     </Link>
                 </div>
             </nav>
