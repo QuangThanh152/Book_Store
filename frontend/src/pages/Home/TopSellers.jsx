@@ -3,18 +3,33 @@ import BookCard from '../Books/BookCard';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Autoplay , Navigation} from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 // List options
 const categories = ["Chọn thể loại", "Business", "Fiction", "Horror", "Adventure", "Marketing"];
 
 const TopSellers = () => {
-    const [books, setBooks] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("Chọn thể loại");
+
+    // lấy api thủ công để test
+    // const [books, setBooks] = useState([]);
+    // useEffect(() => {
+    //     fetch("books.json")
+    //         .then(res => res.json())
+    //         .then((data) => setBooks(data))
+    // }, [])
+
+    // Gọi api từ server
+    const { data: allBooks = {} } = useFetchAllBooksQuery();
+    console.log(allBooks)
+    const filteredBooks = selectedCategory === "Chọn thể loại"
+        ? allBooks.books || [] // Sử dụng key chính xác
+        : (allBooks.books || []).filter(book => book.category === selectedCategory.toLowerCase());
 
     // khai báo để sử dụng Swiper js
     // xử lý tự động chạy qua 1 slide
@@ -24,16 +39,6 @@ const TopSellers = () => {
             progressCircle.current.style.setProperty('--progress', 1 - progress);
         }
     };
-    
-    useEffect(() => {
-        fetch("books.json")
-            .then(res => res.json())
-            .then((data) => setBooks(data))
-    }, [])
-
-    const filteredBooks = selectedCategory === "Chọn thể loại" ? books : books.filter(book => book.category === selectedCategory.toLowerCase());
-    console.log(filteredBooks)
-
     return (
         <div className='py-10'>
             <h2 className='mb-6 text-3xl font-semibold'>Bán chạy nhất</h2>
@@ -87,13 +92,13 @@ const TopSellers = () => {
                 className="mySwiper"
             >
 
-            {
-                filteredBooks.length > 0 && filteredBooks.map((book, index) => (
-                    <SwiperSlide key={index}> 
-                        <BookCard key={index} book={book} />
-                    </SwiperSlide>
-                ))
-            }
+                {
+                    filteredBooks.length > 0 && filteredBooks.map((book, index) => (
+                        <SwiperSlide key={index}>
+                            <BookCard key={index} book={book} />
+                        </SwiperSlide>
+                    ))
+                }
             </Swiper>
 
         </div>
