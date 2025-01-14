@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react';
 import BookCard from '../Books/BookCard';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Autoplay , Navigation} from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 const Recommened = () => {
-    const [books, setBooks] = useState([]);
-
+    // Lấy api từ server
+    const { data = {} } = useFetchAllBooksQuery();
+    const books = data.books || []; // Lấy mảng books từ object trả về
+    
+    console.log('Fetched books:', books);
+    
     // khai báo để sử dụng Swiper js
-    // xử lý tự động chạy qua 1 slide
     const progressCircle = useRef(null);
     const onAutoplayTimeLeft = (s, time, progress) => {
         if (progressCircle.current) {
@@ -22,17 +25,12 @@ const Recommened = () => {
         }
     };
 
-    useEffect(() => {
-        fetch("books.json")
-            .then(res => res.json())
-            .then((data) => setBooks(data))
-    }, [])
-  return (
-    <div className='py-16'>
-        <h2 className='mb-6 text-3xl font-semibold'>Đề xuất</h2>
+    return (
+        <div className='py-16'>
+            <h2 className='mb-6 text-3xl font-semibold'>Đề xuất</h2>
 
-                    {/* xử lý thanh cuộn ngang */}
-                    <Swiper
+            {/* xử lý thanh cuộn ngang */}
+            <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
                 navigation={true}
@@ -62,17 +60,18 @@ const Recommened = () => {
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper"
             >
-
-            {
-                books.length > 0 && books.slice(8, 19).map((book, index) => (
-                    <SwiperSlide key={index}> 
-                        <BookCard key={index} book={book} />
-                    </SwiperSlide>
-                ))
-            }
+                {/* render */}
+                {
+                    books.length > 0 &&
+                    books.slice(8, 19).map((book, index) => (
+                        <SwiperSlide key={index}>
+                            <BookCard book={book} />
+                        </SwiperSlide>
+                    ))
+                }
             </Swiper>
-    </div>
-  )
-}
+        </div>
+    );
+};
 
-export default Recommened
+export default Recommened;

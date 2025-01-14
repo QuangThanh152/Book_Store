@@ -1,10 +1,13 @@
-.gitattributes text eol=lf
-# Đảm bảo tất cả các file văn bản sử dụng LF
-* text=auto
+# Đảm bảo tất cả các file văn bản sử dụng LF khi lưu trữ trong Git
+* text=auto eol=lf
 
-# Các file cụ thể (JSON, JS, HTML, CSS, v.v.)
-*.js text
-*.json text
-*.html text
-*.css text
-*.md text
+# Định nghĩa cụ thể cho các loại file
+*.js text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+
+# Bỏ qua node_modules và các tệp nhị phân
+node_modules/** -text
+*.bin -text

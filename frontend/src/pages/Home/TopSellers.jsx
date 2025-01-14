@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import BookCard from '../Books/BookCard';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -25,8 +25,9 @@ const TopSellers = () => {
     // }, [])
 
     // Gọi api từ server
-    const { data: allBooks = {} } = useFetchAllBooksQuery();
-    console.log(allBooks)
+    const { data: allBooks = [] } = useFetchAllBooksQuery();
+    // console.log(allBooks)
+
     const filteredBooks = selectedCategory === "Chọn thể loại"
         ? allBooks.books || [] // Sử dụng key chính xác
         : (allBooks.books || []).filter(book => book.category === selectedCategory.toLowerCase());
