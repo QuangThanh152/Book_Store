@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getImgUrl } from "../../utils/getImgUrl";
@@ -119,12 +119,26 @@ const CartPage = () => {
                     </p>
 
                     <div className="flex items-center justify-between mt-6">
-                        <Link
-                            to="/checkout"
-                            className="px-6 py-3 font-medium text-white transition bg-indigo-600 rounded-lg shadow hover:bg-indigo-700"
-                        >
-                            Thanh toán
-                        </Link>
+                    <Link
+    to={cartItems.length > 0 ? "/checkout" : "#"}
+    onClick={(e) => {
+        if (cartItems.length === 0) {
+            e.preventDefault(); // Ngăn chuyển hướng khi giỏ hàng trống
+            Swal.fire({
+                title: "Giỏ hàng trống!",
+                text: "Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.",
+                icon: "warning",
+                confirmButtonText: "Đóng",
+            });
+        }
+    }}
+    className={`px-6 py-3 font-medium text-white transition rounded-lg shadow ${
+        cartItems.length > 0 ? "bg-indigo-600 hover:bg-indigo-700" : "bg-gray-400 cursor-not-allowed"
+    }`}
+>
+    Thanh toán
+</Link>
+
                         <Link to="/" className="text-sm text-indigo-600 hover:underline">
                             Tiếp tục mua →
                         </Link>
