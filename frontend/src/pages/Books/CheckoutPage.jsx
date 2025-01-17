@@ -7,6 +7,8 @@ import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 import { toast } from "react-toastify";
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../../redux/features/cart/cartSlice';
 
 // import { createAOrder } from '../../../../backend/src/orders/order
 
@@ -23,6 +25,7 @@ const CheckoutPage = () => {
 
     const [createOrder] = useCreateOrderMutation();
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false); // Trạng thái để hiển thị lỗi checkbox
@@ -51,6 +54,8 @@ const CheckoutPage = () => {
 
         try {
             await createOrder(newOrder).unwrap();
+    
+            // Hiển thị thông báo và điều hướng
             Swal.fire({
                 title: "Đơn hàng đã xác nhận",
                 width: 600,
@@ -59,16 +64,17 @@ const CheckoutPage = () => {
                 background: "#fff url(/trees.png)",
                 backdrop: `
                     rgba(0,0,123,0.4)
-                    url("/Pion-unscreen.gif")
+                    url("/checkout-unscreen.gif")
                     left top
                     no-repeat
                 `,
                 text: "Đơn hàng của bạn đã được đặt thành công!",
-                // icon: "success",
                 confirmButtonColor: "#3085d6",
-                confirmButtonText: "Ok"
+                confirmButtonText: "Ok",
             }).then(() => {
-                navigate("/orders"); // Điều hướng sau khi nhấn nút xác nhận
+                // Xóa giỏ hàng sau khi đặt hàng thành công
+                dispatch(clearCart()); // Thực hiện hành động xóa giỏ hàng
+                navigate("/orders"); // Điều hướng đến trang danh sách đơn hàng
             });
         } catch (error) {
             console.error("Lỗi đặt hàng", error);
