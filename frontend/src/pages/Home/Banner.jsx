@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import bannerImg from '../../assets/banner.png'
 import Swal from 'sweetalert2' // Đảm bảo đã cài sweetalert2
 

@@ -1,9 +1,17 @@
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi'
 import { useAuth } from '../../context/AuthContext'
+import { useEffect } from 'react'
 
 const OrderPage = () => {
   const { currentUser } = useAuth()
-  const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(currentUser.email)
+  const { data: orders = [], isLoading, isError, refetch  } = useGetOrderByEmailQuery(currentUser.email)
+
+  // Sau khi đơn hàng được tạo, refetch để cập nhật đơn hàng mới
+  useEffect(() => {
+    if (isError || orders.length === 0) {
+      refetch();
+    }
+  }, [isError, orders, refetch]);
 
   if (isLoading) {
     return (
