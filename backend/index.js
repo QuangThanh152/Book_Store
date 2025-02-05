@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 const mongoose = require('mongoose');
+
 require('dotenv').config();
 
 // Port
@@ -17,19 +18,26 @@ app.use(cors({
 // Routes
 const bookRoutes = require("./src/books/book.route");
 const orderRoutes = require("./src/orders/order.route");
+const userRoutes = require("./src/users/user.route");
+const adminRoutes = require("./src/stats/admin.stats");
+
 app.use("/api/books", bookRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/admin", adminRoutes);
 
-// Fallback route
-app.use("/", (req, res) => {
-  res.send("Server web bookStore running");
-});
 
 // Middleware xử lý lỗi toàn cục
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send({ message: "Đã xảy ra lỗi trên server", error: err.message });
 });
+
+// Fallback route
+app.use("/", (req, res) => {
+  res.send("Server web bookStore running");
+});
+
 
 // Kết nối MongoDB
 const connectDB = async () => {

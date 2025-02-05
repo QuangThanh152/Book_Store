@@ -74,7 +74,7 @@ const CheckoutPage = () => {
             }).then(() => {
                 // Xóa giỏ hàng sau khi đặt hàng thành công
                 dispatch(clearCart()); // Thực hiện hành động xóa giỏ hàng
-                navigate("/orders"); // Điều hướng đến trang danh sách đơn hàng
+                navigate("/user-dashboard"); // Điều hướng đến trang danh sách đơn hàng
             });
         } catch (error) {
             console.error("Lỗi đặt hàng", error);
