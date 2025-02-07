@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173', 'https://your-vercel-domain.vercel.app'],
   credentials: true
 }));
 
@@ -50,11 +50,17 @@ const connectDB = async () => {
   }
 };
 
-// Khởi động server
-const startServer = async () => {
-  await connectDB();
-  app.listen(port, () => {
-    console.log(`Server đang chạy tại http://localhost:${port}`);
-  });
-};
-startServer();
+// khởi động server
+if (process.env.NODE_ENV !== 'production') {
+  const startServer = async () => {
+    await connectDB();
+    app.listen(port, () => {
+      console.log(`Server đang chạy tại http://localhost:${port}`);
+    });
+  };
+  startServer();
+} else {
+  connectDB();
+}
+
+module.exports = app; // Thêm dòng này để Vercel có thể sử dụng app

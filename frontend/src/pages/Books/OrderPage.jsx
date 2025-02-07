@@ -12,12 +12,12 @@ const OrderPage = () => {
     refetch,
   } = useGetOrderByEmailQuery(currentUser.email);
 
-  // Sau khi đơn hàng được tạo, refetch để cập nhật đơn hàng mới
+  // Chỉ refetch khi có lỗi, không refetch khi không có đơn hàng
   useEffect(() => {
-    if (isError || orders.length === 0) {
-      refetch();
+    if (isError) {
+      refetch()
     }
-  }, [isError, orders, refetch]);
+  }, [isError, refetch])
 
   if (isLoading) {
     return (
