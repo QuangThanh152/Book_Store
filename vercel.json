@@ -3,15 +3,18 @@
     "builds": [
       {
         "src": "backend/index.js",
-        "use": "@vercel/node"
+        "use": "@vercel/node",
+        "config": { "includeFiles": ["backend/src/**"] }
       },
       {
         "src": "frontend/package.json",
         "use": "@vercel/static-build",
         "config": {
+          "buildCommand": "npm run vercel-build",
           "distDir": "dist"
         }
       }
+      
     ],
     "routes": [
       {
@@ -24,3 +27,4 @@
       }
     ]
   }
+  
