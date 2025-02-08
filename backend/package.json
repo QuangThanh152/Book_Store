@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon index.js",
-    "vercel-build": "echo 'Backend build step'"
+    "start:dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "mamun",
