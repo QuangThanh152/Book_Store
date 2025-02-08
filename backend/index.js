@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-vercel-domain.vercel.app'],
+  origin: ['http://localhost:5173', 'https://book-store-sigma-eight.vercel.app'],
   credentials: true
 }));
 
@@ -51,16 +51,13 @@ const connectDB = async () => {
 };
 
 // khởi động server
-if (process.env.NODE_ENV !== 'production') {
-  const startServer = async () => {
-    await connectDB();
-    app.listen(port, () => {
-      console.log(`Server đang chạy tại http://localhost:${port}`);
-    });
-  };
-  startServer();
-} else {
-  connectDB();
-}
+const startServer = async () => {
+  await connectDB();
+  app.listen(port, () => {
+    console.log(`Server đang chạy tại http://localhost:${port}`);
+  });
+};
+startServer(); // Chạy server ngay cả khi ở môi trường production
+
 
 module.exports = app; // Thêm dòng này để Vercel có thể sử dụng app
