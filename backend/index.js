@@ -8,10 +8,15 @@ require('dotenv').config();
 // Port
 const port = process.env.PORT || 5000;
 
+
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://book-store-sigma-eight.vercel.app'],
+  origin: [
+    'http://localhost:5173', 
+    'https://book-store-sigma-eight.vercel.app',
+    'https://book-store-aplvuffrp-quangthanhh2003-gmailcoms-projects.vercel.app' // Thêm domain Vercel preview
+  ],
   credentials: true
 }));
 
